@@ -18,7 +18,7 @@ void* thread_1(){
 void* thread_2(){
   int j=0;
   for (j=0; j<1000000;j++){
-    i++;	
+    i--;	
   }
 
   return NULL;
@@ -34,6 +34,4 @@ int main(){
   printf("i=%d\n",i);
   return 0; 
 
-}
-  return NULL
 }
