@@ -1,0 +1,45 @@
+// gcc -std=gnu99 -Wall -g -o programnavn filnavn -lpthread
+#include <pthread.h>
+#include <stdio.h>
+
+pthread_mutex_t mutexi;
+int i=0;
+
+
+
+void* thread_1(){
+
+	  int j=0;
+	  for (j=0; j<1000000;j++){
+		pthread_mutex_lock(&mutexi);
+		i++;
+		pthread_mutex_unlock(&mutexi);
+		
+	  }
+
+
+	  return NULL;
+}
+
+void* thread_2(){
+	  int j=0;
+	  for (j=0; j<1000000;j++){
+		pthread_mutex_lock(&mutexi);
+		i--;
+		pthread_mutex_unlock(&mutexi);	
+	  }
+
+	  return NULL;
+}
+
+int main(){
+ 	pthread_t thread1;
+ 	pthread_create(&thread1, NULL, thread_1, NULL);
+ 	pthread_t thread2;
+	pthread_create(&thread2, NULL, thread_2, NULL);
+	pthread_join(thread1, NULL);
+ 	pthread_join(thread2, NULL);
+	printf("i=%d\n",i);
+	return 0; 
+
+}
