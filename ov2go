@@ -1,49 +1,56 @@
-
-// go run filnavn
-
-
-
 package main
 
 import (
 	"fmt"
+	"runtime"
 
 )
 
-var i int=0
-
-func thread1(ch chan int) {
-	var k int=0
-	var ch1done bool = false
+func thread1(ch chan int, finish chan int) {
+	//var k int=0
+	
 	for j:=0; j<1000000; j++ {
-		k++
+		ch <- 1
 	}
-	ch <- i
-	i+=k
-	ch1done = true
+	
+	finish <- 0
+	
 }
 
-func thread2( ch chan int) {
-	var k int=0
-	var ch2done bool = false
+func thread2( ch chan int, finish chan int) {
+	//var k int=0
+	
 	for j:=0; j<1000003; j++ {
-		k--
+		ch <- -1
 	}
-	ch <- i
-	i+=k
-	ch2done = true
+
+	finish <- 0
+	
 }
 
 func main() {
-	//runtime.GOMAXPROCS(runtime.NumCPU())
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	ch:=make(chan int, 1)
-	go thread1(ch)
-	go thread2(ch)
-	case ch1done:
+	finishCh := make(chan int)
+	go thread1(ch, finishCh)
+	go thread2(ch, finishCh)
 
-	case ch2done:
+	i := 0
+	done := false
+	numDone := 0
+	for !done {
+		select {
+		case j := <- ch:
+			i += j
+		case <-finishCh:
+			numDone++
+			if numDone == 2 {
+				done = true
+			}
+		}
+	}
 
-		
+
 	fmt.Println(i)
 	
 }
