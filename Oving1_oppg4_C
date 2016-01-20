@@ -16,9 +16,8 @@ void* thread_1(){
 }
 
 void* thread_2(){
-  int k=0;
-
-   for (k=1000000; k<0;k--){
+  int j=0;
+  for (j=0; j<1000000;j++){
     i++;	
   }
 
