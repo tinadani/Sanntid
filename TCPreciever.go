@@ -50,31 +50,3 @@ func main() {
   }
  
 }
-
-
-  
-
-  for {
-      var buf []byte = make([]byte, 1500)
-      time.Sleep(100 * time.Millisecond)
-      conn,err:=listen.Accept()
-      
-      fmt.Println("Server listen")
-
-      n,err:=conn.Read(buf)
-      if err != nil {
-        conn.Close()
-      }
-
-      if err == nil{
-        continue
-      }
-
-      
-
-
-
-
-  }
- 
-}
