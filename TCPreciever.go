@@ -11,17 +11,45 @@ func CheckError(err error) {
 }
 
 func main() {
-  port:=":33546"
+  	port:="129.241.187.23:33546"
 
-  tcpAdress,err:=net.ResolveTCPAddr("tcp4",port)
-  CheckError(err)
+  	tcpAdress,err:=net.ResolveTCPAddr("tcp",port)
+  	CheckError(err)
 
-  conn,err:= net.DialTCP("tcp",nil,tcpAdress) 
-  CheckError(err) 
+  	conn,err:= net.DialTCP("tcp",nil,tcpAdress) 
+  	CheckError(err) 
 
-  listen ,err := net.ListenTCP("tcp",tcpAdress)
-  CheckError(err)  
+  	//listen ,err := net.ListenTCP("tcp",tcpAdress)
+  	//CheckError(err)  
 
+	buf:= make([]byte, 1024)
+
+
+  
+
+  for {
+      
+ 	
+      	//conn,err:=listen.Accept()
+      
+      	fmt.Println("Server listen")
+
+      	_,err=conn.Read(buf)
+
+      	if err != nil {
+		fmt.Printf("hei")
+        	conn.Close()
+      	}
+	
+	fmt.Printf("%s",buf)
+       time.Sleep(100 * time.Millisecond)
+
+
+
+
+  }
+ 
+}
 
 
   
