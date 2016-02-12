@@ -1,61 +1,59 @@
 package driver
 
 //in port 4
-const PORT_4_SUBDEVICE        3
-const PORT_4_CHANNEL_OFFSET   16
-const PORT_4_DIRECTION        COMEDI_INPUT
-const OBSTRUCTION             (0x300+23)
-const STOP                    (0x300+22)
-const BUTTON_COMMAND1         (0x300+21)
-const BUTTON_COMMAND2         (0x300+20)
-const BUTTON_COMMAND3         (0x300+19)
-const BUTTON_COMMAND4         (0x300+18)
-const BUTTON_UP1              (0x300+17)
-const BUTTON_UP2              (0x300+16)
+const PORT4SUBDEVICE = 3
+const PORT4CHANNELOFFSET = 16
+
+const OBSTRUCTION = (0x300+23)
+const STOP = (0x300+22)
+const BUTTONCOMMAND1 = (0x300+21)
+const BUTTONCOMMAND2 = (0x300+20)
+const BUTTONCOMMAND3 = (0x300+19)
+const BUTTONCOMMAND4 = (0x300+18)
+const BUTTONUP1 = (0x300+17)
+const BUTTONUP2 = (0x300+16)
 
 //in port 1
-const PORT_1_SUBDEVICE        2
-const PORT_1_CHANNEL_OFFSET   0
-const PORT_1_DIRECTION        COMEDI_INPUT
-const BUTTON_DOWN2            (0x200+0)
-const BUTTON_UP3              (0x200+1)
-const BUTTON_DOWN3            (0x200+2)
-const BUTTON_DOWN4            (0x200+3)
-const SENSOR_FLOOR1           (0x200+4)
-const SENSOR_FLOOR2           (0x200+5)
-const SENSOR_FLOOR3           (0x200+6)
-const SENSOR_FLOOR4           (0x200+7)
+const PORT1SUBDEVICE = 2
+const PORT1CHANNELOFFSET = 0
+const BUTTONDOWN2 = (0x200+0)
+const BUTTONUP3 = (0x200+1)
+const BUTTONDOWN3 = (0x200+2)
+const BUTTONDOWN4 = (0x200+3)
+const SENSORFLOOR1 = (0x200+4)
+const SENSORFLOOR2 = (0x200+5)
+const SENSORFLOOR3 = (0x200+6)
+const SENSORFLOOR4 = (0x200+7)
 
 //out port 3
-const PORT_3_SUBDEVICE        3
-const PORT_3_CHANNEL_OFFSET   8
-const PORT_3_DIRECTION        COMEDI_OUTPUT
-const MOTORDIR                (0x300+15)
-const LIGHT_STOP              (0x300+14)
-const LIGHT_COMMAND1          (0x300+13)
-const LIGHT_COMMAND2          (0x300+12)
-const LIGHT_COMMAND3          (0x300+11)
-const LIGHT_COMMAND4          (0x300+10)
-const LIGHT_UP1               (0x300+9)
-const LIGHT_UP2               (0x300+8)
+const PORT3SUBDEVICE = 3
+const PORT3CHANNELOFFSET = 8
+
+const MOTORDIR = (0x300+15)
+const LIGHTSTOP = (0x300+14)
+const LIGHTCOMMAND1 = (0x300+13)
+const LIGHTCOMMAND2 = (0x300+12)
+const LIGHTCOMMAND3 = (0x300+11)
+const LIGHTCOMMAND4 = (0x300+10)
+const LIGHTUP1 = (0x300+9)
+const LIGHTUP2 = (0x300+8)
 
 //out port 2
-const PORT_2_SUBDEVICE        3
-const PORT_2_CHANNEL_OFFSET   0
-const PORT_2_DIRECTION        COMEDI_OUTPUT
-const LIGHT_DOWN2             (0x300+7)
-const LIGHT_UP3               (0x300+6)
-const LIGHT_DOWN3             (0x300+5)
-const LIGHT_DOWN4             (0x300+4)
-const LIGHT_DOOR_OPEN         (0x300+3)
-const LIGHT_FLOOR_IND2        (0x300+1)
-const LIGHT_FLOOR_IND1        (0x300+0)
+const PORT2SUBDEVICE = 3
+const PORT2CHANNELOFFSET = 0
+const LIGHTDOWN2 = (0x300+7)
+const LIGHTUP3 = (0x300+6)
+const LIGHTDOWN3 = (0x300+5)
+const LIGHTDOWN4 = (0x300+4)
+const LIGHTDOOROPEN = (0x300+3)
+const LIGHTFLOORIND2 = (0x300+1)
+const LIGHTFLOORIND1 = (0x300+0)
 
 //out port 0
-const MOTOR                   (0x100+0)
+const MOTOR = (0x100+0)
 
 //non-existing ports (for alignment)
-const BUTTON_DOWN1            -1
-const BUTTON_UP4              -1
-const LIGHT_DOWN1             -1
-const LIGHT_UP4               -1
+const BUTTONDOWN1 = -1
+const BUTTONUP4 = -1
+const LIGHTDOWN1 = -1
+const LIGHTUP4 = -1
