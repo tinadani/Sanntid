@@ -3,8 +3,8 @@ package main
 import ( "net" 
           "fmt" 
           "time"
-          "string")
-
+)
+/*
 func findLocalIP() string {
   addr, _ := net.InterfaceAddrs()
   for _, address := range addr {
@@ -17,8 +17,7 @@ func findLocalIP() string {
     return "0.0.0.0"
 }
 
-
-func broadcastIP()  {
+func broadcastIP()  {
   for{
   localIP=findLocalIP()
   address, _ := net.ResolveUDPAddr("udp", broadcastIP + ":" + writePort)
@@ -33,34 +32,26 @@ func broadcastIP()  {
   }
 
 }
-
+*/
 
 func connectionSetup(IPadress string, port string) *net.TCPConn{
-  tcpAdress,_ := net.ResolveTCPAddr("tcp",IPadress+ ":" + port)
-  TCPconnection,error := net.DialTCP("tcp",nil,tcpAdress) 
-  if error != nil {
-    fmt.Println("Error setting up connection")
-  }
-
+  tcpAdress, error := net.ResolveTCPAddr("tcp", IPadress + ":" + port)
+  CheckError(error, "Error resolving tcp")
+  _, error = net.DialTCP("tcp", nil, tcpAdress) 
+  CheckError(error, "Error setting up connection")
+ 
   listen ,error := net.ListenTCP("tcp",tcpAdress)
-  connection,error:=listen.AcceptTCP()
-  if error != nil {
-    fmt.Println("Error accepting connection")
-  }
+  connection,error := listen.AcceptTCP()
+  CheckError(error, "Error accepting connection")
   return connection
 }
 
 
 func readFromNetwork(connection *net.TCPConn){
-  buffer:= make([]byte, 1024)
-  _,error=connection.Read(buffer)
-
-  if error != nil {
-    fmt.Printf("Error reading buffer")
-          conn.Close()
-        }
-  
-  fmt.Printf("%s",buf)
+  buffer := make([]byte, 1024)
+  _, error := connection.Read(buffer)
+  CheckError(error, "Error reading buffer")
+  fmt.Printf("%s",buffer)
   time.Sleep(100 * time.Millisecond)
 }
 
@@ -71,41 +62,18 @@ func writeToNetwork(connection *net.TCPConn, message string) {
 }
 
 
-
-
-
-
-func CheckError(err error) {
+func CheckError(err error, typeOfError string) {
     if err  != nil {
-        fmt.Println("Error: " , err)
+        fmt.Println(typeOfError)
     }
 }
 
 func main() {
-  	addr:="129.241.187.23:33546"
-
-    listen ,err := net.ListenTCP("tcp",tcpAdress)
-  	CheckError(err)  
-
+  connection :=connectionSetup("localhost","30005")
+  go readFromNetwork(connection)
+  
 	
+	//fmt.Printf("%s",buf)
 
-  for {
-      
- 	
-      	conn,err:=listen.Accept()
-      
-      	fmt.Println("Server listen")
-
-      	_,err=conn.Read(buf)
-
-      	if err != nil {
-		fmt.Printf("hei")
-        	conn.Close()
-      	}
-	
-	fmt.Printf("%s",buf)
-       time.Sleep(100 * time.Millisecond)
-
-  }
- 
+  time.Sleep(100 * time.Millisecond)
 }
