@@ -1,0 +1,62 @@
+package main
+import (
+	"fmt"
+	"net"
+	"time"
+	"strconv"
+	"os/exec"
+)
+
+func main(){
+
+	count := 0
+	countingbuffer := make([]byte,1024)
+
+	UDPaddress, _ := net.ResolveUDPAddr("udp", "localhost:20011")
+	UDPConnection, _ := net.ListenUDP("udp", UDPaddress)
+
+	primallisten := true
+
+	//backup listening for primal connection
+	for primallisten{
+		timeout := make(chan bool)
+		connection := make(chan bool)
+		go func(){
+			time.Sleep(200 * time.Millisecond)
+			timeout <- true
+		}() 
+
+		go func(){
+			length, _, err := UDPConnection.ReadFromUDP(countingbuffer)
+			if err == nil{
+				connection <- true
+				value, _ := strconv.Atoi(string(countingbuffer[:length]))
+				count =  value
+			}	
+		}()
+
+		select{
+		case<-timeout:
+			primallisten = false
+			count +=1
+			UDPConnection.Close()
+		case <- connection:
+		}
+	}
+
+	//create backup
+	cmd := exec.Command("gnome-terminal", "-x", "./main")
+	cmd.Output()
+
+	//setup primal connection
+	UDPaddresse, _ := net.ResolveUDPAddr("udp", ":20011")
+	connectione, _ := net.DialUDP("udp", nil, UDPaddresse)
+
+	//continue as primal
+	for {
+		fmt.Printf("Count: %v\n", count)
+		fmt.Fprintf(connectione, strconv.Itoa(count))
+		count += 1
+		time.Sleep(100 * time.Millisecond)
+	}
+}
