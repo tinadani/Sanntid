@@ -45,20 +45,26 @@ func ElevatorSetMotorDirection(motorDirection int){
     }
 }
 
-func ElevatorSetButtonLamp(buttonType int, floor int, on bool){
+func ElevatorSetButtonLamp(setButtonType int, floor int, on bool){
 
 	if (floor < 0) || (floor > NUMFLOORS){
 		fmt.Println("Invalid floor to set buttonlamp")
 	}
 
-    if (0 > buttonType) || (buttonType > NUMBUTTONS) {
+    if (setButtonType < 0) || (setButtonType > NUMBUTTONS) {
 		fmt.Println("Invalid button type")
 	}
+    if (floor == 0) && (setButtonType == buttonType["Button call down"]){
+        fmt.Println("Invalid button type to set button lamp")
+    }
+     if (floor == NUMFLOORS-1) && (setButtonType == buttonType["Button call up"]){
+        fmt.Println("Invalid button type to set button lamp")
+    }
 
     if on {
-		IOSetBit(lampChannelsMatrix[floor][buttonType])
+		IOSetBit(lampChannelsMatrix[floor][setButtonType])
 	}else {
-		IOClearBit(lampChannelsMatrix[floor][buttonType])
+		IOClearBit(lampChannelsMatrix[floor][setButtonType])
 	}
 }
 
@@ -89,16 +95,22 @@ func ElevatorSetDoorOpenLamp(on bool) {
     }
 }
 
-func ElevatorGetButtonSignal(buttonType int, floor int) int{
+func ElevatorGetButtonSignal(getButtonType int, floor int) int{
 
 	if (floor < 0 )|| (floor > NUMFLOORS){
 		fmt.Println("Invalid floor to get button signal")
 	}
-	if (0 >= buttonType) || (buttonType > NUMBUTTONS ){
+	if (getButtonType < 0) || (getButtonType > NUMBUTTONS ){
 		fmt.Println("Invalid button type to get button signal")
 	}
+    if (floor == 0) && (getButtonType == buttonType["Button call down"]){
+        fmt.Println("Invalid button type to get button signal")
+    }
+     if (floor == NUMFLOORS-1) && (getButtonType == buttonType["Button call up"]){
+        fmt.Println("Invalid button type to get button signal")
+    }
 
-    if IOReadBit(buttonChannelsMatrix[floor][buttonType]) !=0 {
+    if IOReadBit(buttonChannelsMatrix[floor][getButtonType]) !=0 {
         return 1
     }else {
         return 0
@@ -130,7 +142,13 @@ func InitializeElevator() bool{
 
     for floor := 0; floor < NUMFLOORS; floor++{
         for button := 0; button < NUMBUTTONS; button++{
-            ElevatorSetButtonLamp(button,floor,OFF)
+            if( (button == buttonType["Button call down"]) && (floor != 0 )){
+                ElevatorSetButtonLamp(button,floor,OFF)
+            }
+
+            if( (button == buttonType["Button call up"]) && (floor != 3 )){
+                ElevatorSetButtonLamp(button,floor,OFF)
+            }
         }
     }
 
